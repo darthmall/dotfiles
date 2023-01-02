@@ -190,11 +190,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag.add("1", {
-        layout   = awful.layout.suit.tile,
-        screen   = s,
-        selected = true,
-    })
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -437,15 +433,9 @@ for i = 1, 9 do
                   function ()
                         local screen = awful.screen.focused()
                         local tag = screen.tags[i]
-
-                        if not tag then
-                           tag = awful.tag.add(i, {
-                               screen   = screen,
-                               layout   = awful.layout.suit.tile,
-                               volatile = true,
-                           })
+                        if tag then
+                           tag:view_only()
                         end
-                        tag:view_only()
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
@@ -462,16 +452,10 @@ for i = 1, 9 do
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
-                          local s = client.focus.screen
-                          local tag = s.tags[i]
-                          if not tag then
-                              tag = awful.tag.add(i, {
-                                  screen   = s,
-                                  layout   = awful.layout.suit.tile,
-                                  volatile = true
-                              })
+                          local tag = client.focus.screen.tags[i]
+                          if tag then
+                              client.focus:move_to_tag(tag)
                           end
-                          client.focus:move_to_tag(tag)
                      end
                   end,
                   {description = "move focused client to tag #"..i, group = "tag"}),
