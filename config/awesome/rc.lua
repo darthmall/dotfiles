@@ -256,6 +256,10 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
+local function lock_screen()
+    awful.spawn.with_shell("slock")
+end
+
 globalkeys = gears.table.join(
     awful.key({}, "#121", function() volume_widget:toggle() end),
     awful.key({}, "#122", function() volume_widget:dec(5) end),
