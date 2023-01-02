@@ -190,7 +190,11 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag.add("1", {
+        layout   = awful.layout.suit.tile,
+        screen   = s,
+        selected = true,
+    })
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -265,6 +269,24 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
+    awful.key({ modkey }, "t",
+        function ()
+            awful.prompt.run {
+                prompt = "Name: ",
+                textbox = awful.screen.focused().mypromptbox.widget,
+                exe_callback = function(new_name)
+                    if not new_name or #new_name == 0 then return end
+
+                    local t = awful.screen.focused().selected_tag
+                    if t then
+                        t.name = new_name
+                    end
+                end
+            }
+        end,
+        {description = "rename tag", group = "tag"}),
+
+    awful.key({ modkey }, ";", lock_screen, {description = "lock screen", group = "awesome"}),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -411,9 +433,15 @@ for i = 1, 9 do
                   function ()
                         local screen = awful.screen.focused()
                         local tag = screen.tags[i]
-                        if tag then
-                           tag:view_only()
+
+                        if not tag then
+                           tag = awful.tag.add(i, {
+                               screen   = screen,
+                               layout   = awful.layout.suit.tile,
+                               volatile = true,
+                           })
                         end
+                        tag:view_only()
                   end,
                   {description = "view tag #"..i, group = "tag"}),
         -- Toggle tag display.
@@ -430,10 +458,16 @@ for i = 1, 9 do
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:move_to_tag(tag)
+                          local s = client.focus.screen
+                          local tag = s.tags[i]
+                          if not tag then
+                              tag = awful.tag.add(i, {
+                                  screen   = s,
+                                  layout   = awful.layout.suit.tile,
+                                  volatile = true
+                              })
                           end
+                          client.focus:move_to_tag(tag)
                      end
                   end,
                   {description = "move focused client to tag #"..i, group = "tag"}),
