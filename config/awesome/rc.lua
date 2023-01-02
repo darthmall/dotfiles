@@ -225,18 +225,36 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mylayoutbox,
+            wibox.widget {
+                widget = wibox.widget.separator { orientation = "vertical", forced_width = 8, opacity = 0 },
+            },
             s.mytaglist,
+            wibox.widget {
+                widget = wibox.widget.separator { orientation = "vertical", forced_width = 8, opacity = 0 },
+            },
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            wibox.widget {
+                widget = wibox.widget.separator { orientation = "vertical", forced_width = 8, opacity = 0 },
+            },
             wibox.widget.systray(),
+            wibox.widget {
+                widget = wibox.widget.separator { orientation = "vertical", forced_width = 8, opacity = 0 },
+            },
             cpu_widget(),
             ram_widget(),
             net_speed_widget(),
             battery_widget({ show_current_level = true }),
+            wibox.widget {
+                widget = wibox.widget.separator { orientation = "vertical", forced_width = 8, opacity = 0 },
+            },
             volume_widget({ widget_type = "arc" }),
+            wibox.widget {
+                widget = wibox.widget.separator { orientation = "vertical", forced_width = 8, opacity = 0 },
+            },
             mytextclock,
         },
     }
