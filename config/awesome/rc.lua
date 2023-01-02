@@ -124,6 +124,12 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -226,6 +232,11 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
+            cpu_widget(),
+            ram_widget(),
+            net_speed_widget(),
+            battery_widget({ show_current_level = true }),
+            volume_widget({ widget_type = "arc" }),
             mytextclock,
         },
     }
@@ -242,6 +253,10 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
+    awful.key({}, "#121", function() volume_widget:toggle() end),
+    awful.key({}, "#122", function() volume_widget:dec(5) end),
+    awful.key({}, "#123", function() volume_widget:inc(5) end),
+
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
