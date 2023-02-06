@@ -26,9 +26,6 @@ require("lazy").setup("plugins", {
 require("autocmds");
 require("keymaps");
 
--- Testing {{{
-vim.g["test#strategy"] = "asyncrun_background"
-
 -- HTML/CSS/JS
 vim.g["prettier#autoformat_config_present"] = 1
 -- }}}

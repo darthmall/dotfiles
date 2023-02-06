@@ -14,11 +14,6 @@ return {
 	{'editorconfig/editorconfig-vim', lazy = false },
 	{'knubie/vim-kitty-navigator', lazy = false, build = 'cp ./*.py ~/.config/kitty/'},
 	{
-		'vim-test/vim-test',
-		dependencies = { 'skywind3000/asyncrun.vim' },
-		cmd = {"TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit"}
-	},
-	{
 		"ggandor/leap.nvim",
 		dependencies = { "ggandor/flit.nvim", "tpope/vim-repeat" },
 		config = function()
