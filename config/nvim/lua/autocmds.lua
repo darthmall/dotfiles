@@ -28,9 +28,3 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.spell = true
 	end,
 })
-
--- Autoformat Python files
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-	pattern = { "*.py" },
-	command = ":Black",
-})
