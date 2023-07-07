@@ -1,5 +1,6 @@
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 return {
+	{ "L3MON4D3/LuaSnip" },
 	{ -- auto completion
 		"hrsh7th/nvim-cmp",
 		version = false,
