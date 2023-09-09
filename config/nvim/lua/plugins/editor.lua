@@ -82,4 +82,32 @@ return {
 			require("gitsigns").setup(opts)
 		end,
 	},
+	{ "L3MON4D3/LuaSnip" },
+	{
+		"williamboman/mason.nvim",
+		cmd = "Mason",
+		opts = {
+			ensure_installed = {
+				"black",
+				"emmet-ls",
+				"flake8",
+				"isort",
+				"prettier",
+				"shellcheck",
+				"shfmt",
+				"stylelint-lsp",
+				"stylua",
+			},
+		},
+		config = function(_, opts)
+			require("mason").setup(opts)
+			local registry = require("mason-registry")
+			for _, name in ipairs(opts.ensure_installed) do
+				local pkg = registry.get_package(name)
+				if not pkg:is_installed() then
+					pkg:install()
+				end
+			end
+		end,
+	},
 }
