@@ -1,58 +1,11 @@
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 return {
-	{ "L3MON4D3/LuaSnip" },
-	{ -- auto completion
-		"hrsh7th/nvim-cmp",
-		version = false,
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"saadparwaiz1/cmp_luasnip",
-		},
-		opts = function()
-			local cmp = require("cmp")
-			return {
-				completion = {
-					completeopt = "menu,menuone,noinsert",
-				},
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "buffer" },
-					{ name = "path" },
-				}),
-				experimental = {
-					-- TODO: What this do?
-					ghost_text = {
-						hl_group = "LspCodeLens",
-					},
-				},
-			}
-		end,
-	},
 	{
 		"neovim/nvim-lspconfig",
 		event = "BufReadPre",
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/cmp-nvim-lsp",
-			-- TODO: folke/neoconf.nvim for project local config?
-			-- TODO: "folke/neodev.nvim" for NeoVim lua completions? Needs cmp-nvim-lsp?
 		},
 		keys = {
 			{ "<leader>cd", vim.diagnostic.open_float, desc = "Line Diagnostics" },
@@ -63,8 +16,8 @@ return {
 			{ "gI", "<cmd>Telescope lsp_implementations<cr>", desc = "Goto Implementation" },
 			{ "gt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Goto Type Definition" },
 			{ "K", vim.lsp.buf.hover, desc = "Hover" },
-			-- { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
-			-- { "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
+			{ "gK", vim.lsp.buf.signature_help, desc = "Signature Help" },
+			{ "<c-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help" },
 			{ "]d", vim.diagnostic.goto_next, desc = "Next Diagnostic" },
 			{ "[d", vim.diagnostic.goto_prev, desc = "Prev Diagnostic" },
 			{ "]e", function () vim.diagnostic.goto_next({ severity = "ERROR" }) end, desc = "Next Error" },
@@ -98,9 +51,6 @@ return {
 				"vimls",
 				"yamlls",
 			},
-			setup = {
-				-- setup handlers for mason-lspconfig
-			}
 		},
 		config = function(plugin, opts)
 			vim.diagnostic.config(opts.diagnostics)
@@ -120,26 +70,6 @@ return {
 			mlsp.setup_handlers({ setup })
 		end,
 	},
-
-	{
-		"jose-elias-alvarez/null-ls.nvim",
-		event = "BufReadPre",
-		dependencies = { "williamboman/mason.nvim" },
-		opts = function()
-			local nls = require("null-ls")
-			return {
-				sources = {
-					nls.builtins.diagnostics.flake8,
-					nls.builtins.formatting.black,
-					nls.builtins.formatting.eslint,
-					nls.builtins.formatting.isort,
-					nls.builtins.formatting.prettier,
-					nls.builtins.formatting.stylua,
-				},
-			}
-		end,
-	},
-
 	{
 		"williamboman/mason.nvim",
 		cmd = "Mason",
