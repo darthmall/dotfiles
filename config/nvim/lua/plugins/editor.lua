@@ -1,10 +1,10 @@
 return {
 	{
 		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
 		opts = {
-			filetype_exclude = { "help", "alpha", "Trouble", "lazy" },
-			show_current_context = true,
-		}
+			exclude = { filetypes = { "help", "alpha", "Trouble", "lazy" } },
+		},
 	},
 	{
 		"echasnovski/mini.pairs",
