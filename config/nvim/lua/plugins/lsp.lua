@@ -41,7 +41,6 @@ return {
 				"cssls",
 				"dockerls",
 				"eslint",
-				"emmet_ls",
 				"html",
 				"jsonls",
 				"pyright",
@@ -76,7 +75,6 @@ return {
 		opts = {
 			ensure_installed = {
 				"black",
-				"emmet-ls",
 				"flake8",
 				"isort",
 				"prettier",
