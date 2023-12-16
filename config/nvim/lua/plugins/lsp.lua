@@ -44,6 +44,7 @@ return {
 				"html",
 				"jsonls",
 				"pyright",
+				"ruff_lsp",
 				"svelte",
 				"taplo", -- TOML
 				"tsserver",
@@ -74,10 +75,8 @@ return {
 		cmd = "Mason",
 		opts = {
 			ensure_installed = {
-				"black",
-				"flake8",
-				"isort",
 				"prettier",
+				"ruff-lsp",
 				"shellcheck",
 				"shfmt",
 				"stylelint-lsp",

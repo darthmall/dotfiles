@@ -26,8 +26,6 @@ return {
 		end,
 	},
 	-- TODO: 'Pocco81/true-zen.nvim', -- Distraction-free writing
-	-- Python
-	-- TODO: 'psf/black',
 	-- Web
 	-- TODO: 'prettier/vim-prettier',
 	-- TODO: 'mattn/emmet-vim',

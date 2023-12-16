@@ -32,5 +32,5 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Autoformat Python files
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = { "*.py" },
-	command = ":Black",
+	callback = function() vim.lsp.buf.format { async = true } end
 })
