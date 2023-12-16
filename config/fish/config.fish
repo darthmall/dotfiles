@@ -26,10 +26,10 @@ if status is-interactive
 
 	abbr --add --global rm 'rm -I'
 
-	abbr --add --global l 'exa --long --header --git'
-	abbr --add --global ll 'exa --long --header --git --all'
-	abbr --add --global lt 'exa --long --header --git --all --tree'
-	abbr --add --global tree 'exa --tree'
+	abbr --add --global l 'eza --long --header --git'
+	abbr --add --global ll 'eza --long --header --git --all'
+	abbr --add --global lt 'eza --long --header --git --all --tree'
+	abbr --add --global tree 'eza --tree'
 
 	if type -q fdfind
 		abbr --add --global fd 'fdfind'
