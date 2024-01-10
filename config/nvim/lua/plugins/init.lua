@@ -4,11 +4,11 @@
 
 return {
 	{
-		"preservim/vim-colors-pencil",
+		"rebelot/kanagawa.nvim",
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd([[colorscheme pencil]])
+			vim.cmd([[colorscheme kanagawa]])
 		end,
 	},
 	{ "editorconfig/editorconfig-vim", lazy = false },
